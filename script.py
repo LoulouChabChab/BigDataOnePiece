@@ -17,13 +17,13 @@ for label, value in info_dict.items():
 
 
 numarray = numpy.array(image.getdata(), numpy.uint8)
-clusters = KMeans(n_clusters=4)
+clusters = KMeans(n_clusters=3)
 clusters.fit(numarray)
-npbins = numpy.arange(0, 5)
+npbins = numpy.arange(0, 4)
 histogram = numpy.histogram(clusters.labels_, bins=npbins)
 labels = numpy.unique(clusters.labels_)
 barlist = plot.bar(labels, histogram[0])
-for i in range(4):
+for i in range(3):
     barlist[i].set_color('#%02x%02x%02x' % (
         math.ceil(clusters.cluster_centers_[i][0]),
         math.ceil(clusters.cluster_centers_[i][1]),

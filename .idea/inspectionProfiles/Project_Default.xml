@@ -4,15 +4,23 @@
     <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
       <option name="ignoredErrors">
         <list>
+<<<<<<< HEAD
           <option value="N802" />
+=======
+          <option value="N801" />
+>>>>>>> pouet
         </list>
       </option>
     </inspection_tool>
     <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="ignoredIdentifiers">
         <list>
+<<<<<<< HEAD
           <option value="tuple.infixe" />
           <option value="list.pop" />
+=======
+          <option value="str.__neg__" />
+>>>>>>> pouet
         </list>
       </option>
     </inspection_tool>

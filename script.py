@@ -1,3 +1,4 @@
+import pandas as pd
 from PIL import Image
 import numpy
 import math
@@ -29,6 +30,9 @@ for i in range(3):
         math.ceil(clusters.cluster_centers_[i][1]),
         math.ceil(clusters.cluster_centers_[i][2])))
 plot.show()
+
+df = pd.DataFrame()
+df.to_csv('mystake.csv', mode='a', header=False)
 # # extract EXIF data
 # exifdata = image.getexif()
 #

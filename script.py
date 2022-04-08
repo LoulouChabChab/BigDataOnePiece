@@ -1,5 +1,6 @@
 import math
 # import required module
+#pil
 import os
 import csv
 import matplotlib.pyplot as plot
@@ -8,13 +9,14 @@ from PIL import Image
 from sklearn.cluster import KMeans
 
 # assign directory
-directory = 'Data/Robin'
+directory = 'Data'
 index = 0
 
 
 # iterate over files in
 # that directory
 def data(file):
+    data = []
     image = Image.open(file)
     # extract other basic metadata
     info_dict = {
@@ -24,6 +26,7 @@ def data(file):
     }
 
     for label, value in info_dict.items():
+        data.append(value)
         print(f"{label:25}: {value}")
 
     nbColors = 2
@@ -38,7 +41,6 @@ def data(file):
     labels = numpy.unique(clusters.labels_)
     barlist = plot.bar(labels, histogram[0])
 
-    data = []
     f = open('data2.csv', 'a')
     writer = csv.writer(f)
 
@@ -56,8 +58,12 @@ def data(file):
 
 for filename in os.listdir(directory):
     f = os.path.join(directory, filename)
-    # checking if it is a file
     if os.path.isfile(f):
-        data(f)
+        print(directory)
+    elif os.path.isdir(f):
+        # print(f)
+        for filename2 in os.listdir(f):
+            f2 = os.path.join(f, filename2)
+            data(f2)
 
 # df = pd.DataFrame()

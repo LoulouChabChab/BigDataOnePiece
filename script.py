@@ -1,7 +1,7 @@
 import math
 # import required module
 import os
-
+import csv
 import matplotlib.pyplot as plot
 import numpy
 from PIL import Image
@@ -37,15 +37,21 @@ def data(file):
     histogram = numpy.histogram(clusters.labels_, bins=npbins)
     labels = numpy.unique(clusters.labels_)
     barlist = plot.bar(labels, histogram[0])
+    data = ''
     for i in range(nbColors):
-        print("Couleur ", i, " : ")
-        print('#%02x%02x%02x' % (math.ceil(clusters.cluster_centers_[i][0]), math.ceil(clusters.cluster_centers_[i][1]),
-                                 math.ceil(clusters.cluster_centers_[i][2])))
+        data = data + ('#%02x%02x%02x' % (
+            math.ceil(clusters.cluster_centers_[i][0]), math.ceil(clusters.cluster_centers_[i][1]),
+            math.ceil(clusters.cluster_centers_[i][2]))) + ';'
         barlist[i].set_color('#%02x%02x%02x' % (
             math.ceil(clusters.cluster_centers_[i][0]),
             math.ceil(clusters.cluster_centers_[i][1]),
             math.ceil(clusters.cluster_centers_[i][2])))
     plot.show()
+    # open the file in the write mode
+    print(data)
+    f = open('data2.csv', 'w')
+    writer = csv.writer(f)
+    writer.writerow(data)
 
 
 for filename in os.listdir(directory):
@@ -55,19 +61,3 @@ for filename in os.listdir(directory):
         data(f)
 
 # df = pd.DataFrame()
-# df.to_csv('mystake.csv', mode='a', header=False)
-
-# # extract EXIF data
-# exifdata = image.getexif()
-#
-#
-#
-# # iterating over all EXIF data fields
-# for tag_id in exifdata:
-#     # get the tag name, instead of human unreadable tag id
-#     tag = TAGS.get(tag_id, tag_id)
-#     data = exifdata.get(tag_id)
-#     # decode bytes
-#     if isinstance(data, bytes):
-#         data = data.decode()
-#     print(f"{tag:25}: {data}")

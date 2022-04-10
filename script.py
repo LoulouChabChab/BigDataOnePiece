@@ -1,16 +1,36 @@
+import csv
 import math
 # import required module
-#pil
+# pil
 import os
-import csv
+
 import matplotlib.pyplot as plot
 import numpy
 from PIL import Image
 from sklearn.cluster import KMeans
+from scipy.spatial import KDTree
+from webcolors import (
+    CSS3_HEX_TO_NAMES,
+    hex_to_rgb,
+)
 
 # assign directory
 directory = 'Data'
 index = 0
+
+
+def convert_rgb_to_names(rgb_tuple):
+    # a dictionary of all the hex and their respective names in css3
+    css3_db = CSS3_HEX_TO_NAMES
+    names = []
+    rgb_values = []
+    for color_hex, color_name in css3_db.items():
+        names.append(color_name)
+        rgb_values.append(hex_to_rgb(color_hex))
+
+    kdt_db = KDTree(rgb_values)
+    distance, index = kdt_db.query(rgb_tuple)
+    return names[index]
 
 
 # iterate over files in
@@ -45,14 +65,14 @@ def data(file):
     writer = csv.writer(f)
 
     for i in range(nbColors):
-        data.append('#%02x%02x%02x' % (
-            math.ceil(clusters.cluster_centers_[i][0]), math.ceil(clusters.cluster_centers_[i][1]),
-            math.ceil(clusters.cluster_centers_[i][2])))
+        data.append(convert_rgb_to_names((math.ceil(clusters.cluster_centers_[i][0]),
+                                          math.ceil(clusters.cluster_centers_[i][1]),
+                                          math.ceil(clusters.cluster_centers_[i][2]))))
         barlist[i].set_color('#%02x%02x%02x' % (
             math.ceil(clusters.cluster_centers_[i][0]),
             math.ceil(clusters.cluster_centers_[i][1]),
             math.ceil(clusters.cluster_centers_[i][2])))
-    plot.show()
+    # plot.show()
     writer.writerow(data)
 
 
@@ -67,3 +87,4 @@ for filename in os.listdir(directory):
             data(f2)
 
 # df = pd.DataFrame()
+

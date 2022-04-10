@@ -1,11 +1,6 @@
 # Import Pandas
+import numpy as np
 import pandas as pd
-from matplotlib import pyplot as plt
-from numpy import array
-from numpy import argmax
-from sklearn.preprocessing import LabelEncoder
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.metrics.pairwise import linear_kernel
 
 # Load Movies Metadata
 metadata = pd.read_csv('data_OP.csv', low_memory=False)
@@ -16,6 +11,7 @@ print("Total number of unique characters : ", metadata["Personnage"].nunique())
 print("Total number of unique color 1 types : ", metadata["Couleur 1"].nunique())
 print("Total number of unique color 2 types : ", metadata["Couleur 2"].nunique())
 print(metadata["Personnage"].value_counts())
+print("-----------------------------------")
 
 # print(metadata['Couleur 1'].head())
 # print(metadata.shape)

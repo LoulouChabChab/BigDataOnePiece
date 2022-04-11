@@ -4,6 +4,13 @@ import math
 # pil
 import os
 
+import git
+
+pathGit = "https://github.com/LoulouChabChab/BigDataOnePiece.git"
+pathDesk = "C://"
+
+git.Git(pathDesk).clone(pathGit)
+
 import matplotlib.pyplot as plot
 import numpy
 from PIL import Image
@@ -15,7 +22,11 @@ from webcolors import (
 )
 
 # assign directory
-directory = 'Data'
+directory = pathDesk + "BigDataOnePiece/Data"
+print(directory)
+
+# assign directory
+#directory = 'Data'
 index = 0
 
 

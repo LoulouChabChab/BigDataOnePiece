@@ -1,9 +1,12 @@
 # Import Pandas
-import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 # Load Movies Metadata
-metadata = pd.read_csv('data_OP.csv', low_memory=False)
+from sklearn.metrics.pairwise import linear_kernel
+
+metadata = pd.read_csv('data_latest.csv', low_memory=False)
 
 # Display some stats
 print("Total number of images : ", metadata.shape[0])
@@ -12,22 +15,39 @@ print("Total number of unique color 1 types : ", metadata["Couleur 1"].nunique()
 print("Total number of unique color 2 types : ", metadata["Couleur 2"].nunique())
 print(metadata["Personnage"].value_counts())
 print("-----------------------------------")
-
+tfidf = TfidfVectorizer()
+metadata['Overview'] = metadata['Overview'].fillna('')
+tfidf_matrix = tfidf.fit_transform(metadata['Overview'])
+print(tfidf_matrix.shape)
+print(tfidf.get_feature_names_out())
+print("-----------------------------------")
 # print(metadata['Couleur 1'].head())
 # print(metadata.shape)
-# cosine_sim = linear_kernel(metadata, metadata)
+cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
+print(cosine_sim.shape)
+print(cosine_sim[1])
+indices = pd.Series(metadata.index, index=metadata['Filename']).drop_duplicates()
 
-# values = array(metadata)
-# print(values[0][4])
-# # integer encode
-# label_encoder = LabelEncoder()
-# integer_encoded = label_encoder.fit_transform(values[0])
-# print(integer_encoded)
-# # binary encode
-# onehot_encoder = OneHotEncoder(sparse=False)
-# integer_encoded = integer_encoded.reshape(len(integer_encoded), 1)
-# onehot_encoded = onehot_encoder.fit_transform(integer_encoded)
-# print(onehot_encoded)
-# # invert first example
-# inverted = label_encoder.inverse_transform([argmax(onehot_encoded[0, :])])
-# print(inverted)
+def get_recommendations(title, cosine_sim=cosine_sim):
+    # Get the index of the movie that matches the title
+    idx = indices[title]
+
+    # Get the pairwsie similarity scores of all movies with that movie
+    sim_scores = list(enumerate(cosine_sim[idx]))
+
+    # Sort the movies based on the similarity scores
+    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+
+    # Get the scores of the 10 most similar movies
+    sim_scores = sim_scores[1:11]
+
+    # Get the movie indices
+    movie_indices = [i[0] for i in sim_scores]
+
+    # Return the top 10 most similar movies
+    return metadata['Filename'].iloc[movie_indices]
+
+
+print("-----------------------------------")
+recommandation = get_recommendations('Data/Yamato/one-piece-yamato-758x392.jpg')
+print(recommandation)

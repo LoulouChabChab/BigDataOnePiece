@@ -9,7 +9,7 @@ import git
 pathGit = "https://github.com/LoulouChabChab/BigDataOnePiece.git"
 pathDesk = "C://"
 
-git.Git(pathDesk).clone(pathGit)
+# git.Git(pathDesk).clone(pathGit)
 
 import matplotlib.pyplot as plot
 import numpy
@@ -22,11 +22,10 @@ from webcolors import (
 )
 
 # assign directory
-directory = pathDesk + "BigDataOnePiece/Data"
-print(directory)
+# directory = pathDesk + "BigDataOnePiece/Data"
 
 # assign directory
-#directory = 'Data'
+directory = 'Data'
 index = 0
 
 
@@ -98,4 +97,3 @@ for filename in os.listdir(directory):
             data(f2)
 
 # df = pd.DataFrame()
-

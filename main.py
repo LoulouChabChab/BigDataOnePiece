@@ -28,6 +28,7 @@ print(cosine_sim.shape)
 print(cosine_sim[1])
 indices = pd.Series(metadata.index, index=metadata['Filename']).drop_duplicates()
 
+
 def get_recommendations(title, cosine_sim=cosine_sim):
     # Get the index of the movie that matches the title
     idx = indices[title]

@@ -1,6 +1,6 @@
 import math
 import os
-
+from os.path import exists
 import numpy
 import pandas as pd
 from PIL import Image
@@ -11,13 +11,19 @@ from webcolors import (
     hex_to_rgb,
 )
 
-# import git
-# pathGit = "https://github.com/LoulouChabChab/BigDataOnePiece.git"
-# pathDesk = "C://"
-# git.Git(pathDesk).clone(pathGit)
+import git
+pathGit = "https://github.com/LoulouChabChab/BigDataOnePiece.git"
+pathDesk = "C://"
+
+if os.path.exists("C://BigDataOnePiece"):
+    print("Repository already exist")
+else:
+    git.Git(pathDesk).clone(pathGit)
+    directory = pathDesk + "BigDataOnePiece/Images"
+
 # assign directory
-# directory = pathDesk + "BigDataOnePiece/Data"
-directory = 'Data'
+
+# directory = 'Images'
 indexRow = 0
 data_filename = []
 data_overview = []

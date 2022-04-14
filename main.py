@@ -50,5 +50,5 @@ def get_recommendations(title, cosine_sim=cosine_sim):
 
 
 print("-----------------------------------")
-recommandation = get_recommendations('Data/Yamato/Yamato3.jpg')
+recommandation = get_recommendations('Images/Yamato/Yamato3.jpg')
 print(recommandation)

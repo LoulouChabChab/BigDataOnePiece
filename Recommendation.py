@@ -48,7 +48,7 @@ def get_recommendations(title, cosine_sim=cosine_sim):
 
 # Example 2
 path = "C://BigDataOnePiece/Images\\"
-personnage = "Kizardddu"
+personnage = "Kizaru"
 image = "Kizaru1.jpeg"
 
 complete_path = path + personnage + "\\" + image

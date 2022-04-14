@@ -19,8 +19,11 @@ indices = pd.Series(metadata.index, index=metadata['Filename']).drop_duplicates(
 
 
 def get_recommendations(title, cosine_sim=cosine_sim):
-    # Get the index of the image
-    idx = indices[title]
+    if title in indices.index:
+        # Get the index of the image
+        idx = indices[title]
+    else:
+        return None
 
     # Get the scores of all images
     sim_scores = list(enumerate(cosine_sim[idx]))
@@ -45,20 +48,23 @@ def get_recommendations(title, cosine_sim=cosine_sim):
 
 # Example 2
 path = "C://BigDataOnePiece/Images\\"
-personnage = "Kizaru"
+personnage = "Kizardddu"
 image = "Kizaru1.jpeg"
 
 complete_path = path + personnage + "\\" + image
 
 recommendation = get_recommendations(complete_path)
 
-img = mpimg.imread(complete_path)
-imgplot = plt.imshow(img)
-plt.show()
-
-for i in range(3):
-    img = mpimg.imread(recommendation.iloc[i])
+if recommendation is not None:
+    img = mpimg.imread(complete_path)
     imgplot = plt.imshow(img)
     plt.show()
 
-recommendation.to_csv('CSV/data_recommendation.csv')
+    for i in range(3):
+        img = mpimg.imread(recommendation.iloc[i])
+        imgplot = plt.imshow(img)
+        plt.show()
+
+    recommendation.to_csv('CSV/data_recommendation.csv')
+else:
+    print("No image found !")

@@ -8,7 +8,7 @@ import numpy as np
 from sklearn.metrics.pairwise import linear_kernel
 
 
-metadata = pd.read_csv('data_latest.csv', low_memory=False)
+metadata = pd.read_csv('CSV/Analyze.csv', low_memory=False)
 
 font1 = {'color': 'black', 'fontweight': 'bold'}
 
@@ -42,6 +42,19 @@ top10Colors2 = metadata['Couleur 2'].value_counts()
 print(top10Colors2.nlargest(n=10))
 print("-----------------------------------")
 
+colorValue = []
+for i in range(10):
+    for j in range(10):
+        if top10Colors1.index.tolist()[i] == top10Colors2.index.tolist()[j]:
+            colorValue.append([i, top10Colors1.nlargest(n=10)[i] + top10Colors2.nlargest(n=10)[j]])
+
+print('#######################################################')
+colorValue.sort(key=lambda x: x[1])
+colorValue.reverse()
+for i in range(len(colorValue)):
+    print(top10Colors1.index.tolist()[colorValue[i][0]], ' ', colorValue[i][1])
+print('#######################################################')
+
 UnionTop10Colors = pd.concat([top10Colors1, top10Colors2]).drop_duplicates()
 UnionTop10Colors = UnionTop10Colors.nlargest(n=10)
 print(UnionTop10Colors)
@@ -53,12 +66,12 @@ UnionTop10Colors.plot(kind='bar')
 plot.show()
 print("-----------------------------------")
 
-groupByFruits = metadata["Fruits démon"].value_counts()
+groupByFruits = metadata["Fruit"].value_counts()
 print(groupByFruits)
 plot.figure().autofmt_xdate(rotation=45)
 plot.gcf().subplots_adjust(bottom=0.25)
 plot.title("Group by fruit", fontdict=font1)
-plot.xlabel("Fruits", fontdict=font1)
+plot.xlabel("Fruit", fontdict=font1)
 plot.ylabel("Count", fontdict=font1)
 
 groupByFruits.plot(kind='bar')

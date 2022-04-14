@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
 # Load Movies Metadata
-metadata = pd.read_csv('data_full.csv', low_memory=False)
+metadata = pd.read_csv('CSV/data_full.csv', low_memory=False)
 
 tfidf = TfidfVectorizer()
 metadata['Overview'] = metadata['Overview'].fillna('')
@@ -61,4 +61,4 @@ for i in range(3):
     imgplot = plt.imshow(img)
     plt.show()
 
-recommendation.to_csv('data_recommendation.csv')
+recommendation.to_csv('CSV/data_recommendation.csv')

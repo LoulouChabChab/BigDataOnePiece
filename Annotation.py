@@ -25,7 +25,7 @@ indexRow = 0
 data_filename = []
 data_overview = []
 
-df_init = pd.read_csv('data_init.csv', low_memory=False)
+df_init = pd.read_csv('CSV/data_init.csv', low_memory=False)
 
 
 def convert_rgb_to_names(rgb_tuple):
@@ -109,4 +109,4 @@ data = {'Filename': data_filename,
         'Overview': data_overview}
 
 df = pd.DataFrame(data)
-df.to_csv('data_full.csv')
+df.to_csv('CSV/data_full.csv')

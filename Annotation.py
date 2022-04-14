@@ -78,8 +78,9 @@ def create_csv(file, indexRow):
     data_filename.append(image.filename)
     overview += get_size(image.height, image.width) + ' '
 
-    if "inverted" in filename:
+    if "inverted" in image.filename:
         overview += " inverted inverted "
+        print(overview)
     else:
         for i in range(nbColors):
             overview += convert_rgb_to_names((math.ceil(clusters.cluster_centers_[i][0]),

@@ -1,6 +1,5 @@
 import math
 import os
-from os.path import exists
 import numpy
 import pandas as pd
 from PIL import Image
@@ -20,8 +19,6 @@ if os.path.exists("C://BigDataOnePiece"):
 else:
     git.Git(pathDesk).clone(pathGit)
 directory = pathDesk + "BigDataOnePiece/Images"
-
-# assign directory
 
 # directory = 'Images'
 indexRow = 0

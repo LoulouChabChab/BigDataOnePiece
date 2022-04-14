@@ -1,2 +1,0 @@
-# BigDataOnePiece
-Project Big Data

@@ -1,12 +1,7 @@
-# Import Pandas
+
 import pandas as pd
-from sklearn.feature_extraction.text import TfidfVectorizer
+
 import matplotlib.pyplot as plot
-import numpy as np
-
-# Load Movies Metadata
-from sklearn.metrics.pairwise import linear_kernel
-
 
 metadata = pd.read_csv('CSV/Analyze.csv', low_memory=False)
 
@@ -43,26 +38,29 @@ print(top10Colors2.nlargest(n=10))
 print("-----------------------------------")
 
 colorValue = []
+colorName = []
+colorCount = []
 for i in range(10):
     for j in range(10):
         if top10Colors1.index.tolist()[i] == top10Colors2.index.tolist()[j]:
-            colorValue.append([i, top10Colors1.nlargest(n=10)[i] + top10Colors2.nlargest(n=10)[j]])
+            colorValue.append(
+                [top10Colors1.index.tolist()[i], top10Colors1.nlargest(n=10)[i] + top10Colors2.nlargest(n=10)[j]])
 
 print('#######################################################')
 colorValue.sort(key=lambda x: x[1])
 colorValue.reverse()
 for i in range(len(colorValue)):
-    print(top10Colors1.index.tolist()[colorValue[i][0]], ' ', colorValue[i][1])
+    colorName.append(colorValue[i][0])
+    colorCount.append(colorValue[i][1])
+    print([colorValue[i][0]], ' ', colorValue[i][1])
 print('#######################################################')
-
-UnionTop10Colors = pd.concat([top10Colors1, top10Colors2]).drop_duplicates()
-UnionTop10Colors = UnionTop10Colors.nlargest(n=10)
-print(UnionTop10Colors)
+c = ['#2F4F4F', 'black', '#F5F5F5', '#696969', '#DCDCDC', '#C0C0C0', '#D3D3D3', '#a9a9a9']
+ax = plot.figure(figsize=(9, 9))
+plot.bar(colorName, colorCount, color=c)
 plot.gcf().subplots_adjust(bottom=0.3)
 plot.title("Top 10 colors", fontdict=font1)
 plot.xlabel("Color", fontdict=font1)
 plot.ylabel("Count", fontdict=font1)
-UnionTop10Colors.plot(kind='bar')
 plot.show()
 print("-----------------------------------")
 

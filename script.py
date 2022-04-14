@@ -1,22 +1,23 @@
 import math
 import os
+
 import numpy
 import pandas as pd
 from PIL import Image
-from sklearn.cluster import KMeans
 from scipy.spatial import KDTree
+from sklearn.cluster import KMeans
 from webcolors import (
     CSS3_HEX_TO_NAMES,
     hex_to_rgb,
 )
 
-import git
-pathGit = "https://github.com/LoulouChabChab/BigDataOnePiece.git"
-pathDesk = "C://"
-git.Git(pathDesk).clone(pathGit)
+# import git
+# pathGit = "https://github.com/LoulouChabChab/BigDataOnePiece.git"
+# pathDesk = "C://"
+# git.Git(pathDesk).clone(pathGit)
 # assign directory
-directory = pathDesk + "BigDataOnePiece/Data"
-# directory = 'Data'
+# directory = pathDesk + "BigDataOnePiece/Data"
+directory = 'Data'
 indexRow = 0
 data_filename = []
 data_overview = []
@@ -65,12 +66,12 @@ def create_csv(file, indexRow):
     numarray = numpy.array(image.getdata(), numpy.uint8)
     clusters = KMeans(n_clusters=nbColors)
     if numarray.ndim == 1:
-        return
+        return False
     clusters.fit(numarray)
 
     # extract other basic metadata
     if image.filename is None:
-        return
+        return False
     data_filename.append(image.filename)
     overview += get_size(image.height, image.width) + ' '
 
@@ -85,6 +86,7 @@ def create_csv(file, indexRow):
     overview += df_init['Personnage'].iloc[indexRow] + ' ' + df_init['Sexe'].iloc[indexRow] + ' ' + \
                 df_init['Faction'].iloc[indexRow] + ' ' + df_init['Fruits'].iloc[indexRow]
     data_overview.append(overview)
+    return True
 
 
 for filename in os.listdir(directory):
@@ -94,11 +96,13 @@ for filename in os.listdir(directory):
     elif os.path.isdir(f):
         for filename2 in os.listdir(f):
             f2 = os.path.join(f, filename2)
-            create_csv(f2, indexRow)
-            print(f2, ' ', indexRow)
-            indexRow += 1
+            if create_csv(f2, indexRow):
+                indexRow += 1
+            percentage = math.ceil(indexRow / 280 * 100)
+            print('[', '#' * percentage, ' ' * (100 - percentage), '] ', percentage, '%')
 
 data = {'Filename': data_filename,
         'Overview': data_overview}
+
 df = pd.DataFrame(data)
 df.to_csv('data_full.csv')

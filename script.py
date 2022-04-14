@@ -19,7 +19,7 @@ if os.path.exists("C://BigDataOnePiece"):
     print("Repository already exist")
 else:
     git.Git(pathDesk).clone(pathGit)
-    directory = pathDesk + "BigDataOnePiece/Images"
+directory = pathDesk + "BigDataOnePiece/Images"
 
 # assign directory
 
